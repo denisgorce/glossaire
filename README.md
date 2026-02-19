@@ -8,6 +8,7 @@
 
 ### Algorithme
 Suite d'instructions permettant de résoudre un problème. 
+maybe
 *Voir aussi : [Intelligence Artificielle](#intelligence-artificielle)*
 
 ---
