@@ -8,17 +8,26 @@
 </head>
 <body>
   <div id="app">Chargement du glossaire...</div>
-  <script>
+<script>
     window.$docsify = {
       name: 'Glossaire Pro',
-      repo: '', // Vous pouvez mettre l'URL de votre dépôt ici
-      loadSidebar: false, // On reste simple pour débuter
-      subMaxLevel: 2,
+      repo: 'https://github.com/denisgorce/glossaire', // REMPLACEZ PAR VOTRE LIEN
+      auto2top: true,
       search: {
         placeholder: 'Rechercher un terme...',
         noData: 'Aucun résultat !',
         depth: 6
-      }
+      },
+      // Ajout du bouton de modification
+      plugins: [
+        function(hook, vm) {
+          hook.beforeEach(function(html) {
+            var url = 'https://github.com/denisgorce/glossaire/edit/main/README.md';
+            var editHtml = '[📝 Proposer une modification](' + url + ')\n\n';
+            return editHtml + html;
+          });
+        }
+      ]
     }
   </script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
