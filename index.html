@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mon Glossaire Collaboratif</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+</head>
+<body>
+  <div id="app">Chargement du glossaire...</div>
+  <script>
+    window.$docsify = {
+      name: 'Glossaire Pro',
+      repo: '', // Vous pouvez mettre l'URL de votre dépôt ici
+      loadSidebar: false, // On reste simple pour débuter
+      subMaxLevel: 2,
+      search: {
+        placeholder: 'Rechercher un terme...',
+        noData: 'Aucun résultat !',
+        depth: 6
+      }
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+</body>
+</html>
