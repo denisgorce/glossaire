@@ -1,0 +1,54 @@
+name: Generateur de Glossaire
+on:
+  push:
+    paths:
+      - 'data.yml' # Le robot ne se réveille que si ce fichier change
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Configuration de Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Installation de PyYAML
+        run: pip install PyYAML
+
+      - name: Transformation du YAML en Markdown
+        run: |
+          python - <<EOF
+          import yaml
+
+          with open('data.yml', 'r', encoding='utf-8') as f:
+              data = yaml.safe_load(f)
+
+          # Trier par ordre alphabétique
+          data.sort(key=lambda x: x['terme'].lower())
+
+          with open('glossaire.md', 'w', encoding='utf-8') as f:
+              f.write("# 📖 Glossaire Automatique\n\n")
+              f.write("> Cette page est générée automatiquement à partir de la base de données.\n\n")
+              
+              for item in data:
+                  statut_badge = "✅" if item['statut'] == "valide" else "⏳ *En cours d'analyse*"
+                  f.write(f"## {item['terme']}\n")
+                  f.write(f"{item['definition']}\n\n")
+                  f.write(f"**Statut :** {statut_badge}  \n")
+                  if 'tags' in item:
+                      tags = " ".join([f"`#{t}`" for t in item['tags']])
+                      f.write(f"**Tags :** {tags}\n\n")
+                  f.write("---\n\n")
+          EOF
+
+      - name: Sauvegarder les modifications
+        run: |
+          git config --global user.name "Glossaire Bot"
+          git config --global user.email "bot@github.com"
+          git add glossaire.md
+          git commit -m "Mise à jour automatique du glossaire" || exit 0
+          git push
